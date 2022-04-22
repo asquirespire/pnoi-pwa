@@ -1,6 +1,7 @@
 {
 	"name": "Pnoi App",
 	"short_name": "Pnoi",
+	"description": "Pnoi things",
 	"icons": [
 		{
 			"src": "/icons/asq-icon.png",
