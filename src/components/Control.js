@@ -11,24 +11,28 @@ import useConnection from "../hooks/useConnection";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
 
+const HOST = "192.168.4.1";
+
 export const ControlUI = React.memo(function ControlUI({ nav }) {
+	const getaddr = (path) => `http://${HOST}${path}`;
+
 	const handleStart = () => {
 		axios
-			.get("/do/start", { do: "start" })
+			.get(getaddr("/do/start"), { do: "start" })
 			.then((r) => console.log(r, "start request"))
 			.catch((e) => console.log(e));
 	};
 
 	const handleStop = () => {
 		axios
-			.get("/do/stop", { do: "stop" })
+			.get(getaddr("/do/stop"), { do: "stop" })
 			.then((r) => console.log(r, "stop request"))
 			.catch((e) => console.log(e));
 	};
 
 	const handleTx = () => {
 		axios({
-			url: "/transfer", //your url
+			url: getaddr("/transfer"), //your url
 			method: "GET",
 			responseType: "blob", // important
 		})
@@ -59,7 +63,9 @@ export const ControlUI = React.memo(function ControlUI({ nav }) {
 	const handleDoneDownload = async (state) => {
 		const article = { title: "download state" };
 		const params = { message: state ? "done" : "failed" };
-		const response = await axios.post("/transferack", article, { params });
+		const response = await axios.post(getaddr("/transferack"), article, {
+			params,
+		});
 		return response;
 	};
 	return (
